@@ -1,0 +1,33 @@
+<form method="get" action="/quizes/">
+	<h3>Filtrar preguntas por texto</h3>
+	<input type="text" name="search" placeholder="Escriba aqui">
+	<input type="submit" value="Enviar">
+</form>
+
+<p>Filtro Actual:
+	<% if (search) { 
+		search 
+		} else { %>
+		Vacio
+	<% } %>
+</p>	
+
+<table>
+<% if (quizes.length == 0) { %>
+	<tr><td>No hay ninguna pregunta para mostrar. Prueba a realizar otra búsqueda o crea mas preguntas.</td></tr>
+<% } else {
+	var i; for (i=0; i < quizes.length; i++) { %>
+	<tr>
+		<td class="capitalize"><%= quizes[i].tema %>&nbsp;</td>
+		<td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+		<% if (session.user) { %>
+		<td><a href="/quizes/<%= quizes[i].id %>/edit"><button type="button">Editar</button></a></td>
+		<td><form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
+		<button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>')">Borrar</button></a></form></td>
+		<% } %>
+	</tr>
+<% } } %>
+</table>
+<% if (session.user) { %>
+<h4><a href="/quizes/new">Crear pregunta</a></h4>
+<% } %>

@@ -1,0 +1,34 @@
+<form method="get" action="/quizes/<%= quiz.id %>/answer">
+	<p>Tematica: <%= quiz.tema %></p>
+	<p>Pregunta: <%= quiz.pregunta %></p>
+	<input type="text" name="respuesta" placeholder="Responda aqui">
+	<input type="submit" value="Enviar">
+</form>
+<br/>
+<p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo comentario</button></a></p>
+<table>
+<tr><td colspan="3"><strong>
+<% if (quiz.Comments.length == 0) { %>
+	No hay comentarios:
+<% } else { %>
+	Comentarios:
+<% } %>
+</strong></td></tr>
+<% for(index in quiz.Comments) { %>
+	<% if (quiz.Comments[index].publicado || session.user) { %>
+	<tr><td><%=quiz.Comments[index].texto%></td>
+		<% if(session.user && !quiz.Comments[index].publicado) { %>
+		<td><a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/publish">
+			<button>Publicar</button></a></td>
+		<% } else if(session.user && quiz.Comments[index].publicado) { %>
+		<td><a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/unpublish">
+			<button>Despublicar</button></a></td>
+		<% } %>	
+		<% if (session.user) { %>
+		<td><form method="post" action="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>?_method=delete">
+		<button type="submit" onClick="return confirm('Borrar: <%= quiz.Comments[index].texto %>')">Borrar</button></a></form></td>
+		<% } %>
+	</tr>	
+	<% } %>	
+<% }  %>
+</table>

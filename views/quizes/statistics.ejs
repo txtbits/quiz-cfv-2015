@@ -1,0 +1,15 @@
+<h3>Estadisticas</h3><br/>
+<p>Número de preguntas: <span class="strong"><%= stats['totPregs'] %></span></p>
+<p>Número de preguntas sin comentarios: <span class="strong"><%= stats['totPregs']-stats['pregsConComm'] %></span></p>
+<p>Número de preguntas con comentarios: <span class="strong"><%= stats['pregsConComm'] %></span></p>
+<br/>
+<p>Número de comentarios totales: <span class="strong"><%= stats['totComm'] %></span></p>
+<p>Número medio de comentarios por pregunta: <span class="strong">
+<% if (stats['totPregs']>0){ %>
+<%= (stats['totComm']/stats['totPregs']).toFixed(2) %>
+<% } else { %>
+<%= 0 %>
+<% } %>
+</span></p>
+<p>Número de comentarios moderados: <span class="strong"><%= stats['commHidden'] %></span></p>
+<p>Número de comentarios publicados: <span class="strong"><%= stats['totComm']-stats['commHidden'] %></span></p>

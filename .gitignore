@@ -1,5 +1,4 @@
 .DS_Store
-node_modules
-Thumbs.db
+node-modules
 npm-debug.log
-quiz.sqlite
+

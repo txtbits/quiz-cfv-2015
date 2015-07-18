@@ -4,12 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var partials = require('express-partials');
-var methodOverride = require('method-override');
-var session = require('express-session');
 
+var partials = require('express-partials');
 var routes = require('./routes/index');
-var sessionController = require('./controllers/session_controller');
+// var users = require('./routes/users');
 
 var app = express();
 
@@ -17,38 +15,19 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(partials());
+app.use(partials()); 
 
+// uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser('Quiz 2015'));
-//app.use(session({secret: 'Quiz 2015', cookie: { maxAge: 1200000 }, resave: true, saveUninitialized: true }));
-app.use(session({secret: 'Quiz 2015'}));
-app.use(methodOverride('_method'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Helpers dinamicos:
-app.use(function(req, res, next) {
-  // guardar path en session.redir para despues de login
-  if (!req.path.match(/\/login|\/logout/)) {
-    req.session.redir = req.path;
-  }
-  // Hacer visible req.session en las vistas
-  res.locals.session = req.session;
-  next();
-});
-
-
-app.use(function(req, res, next){
-  sessionController.checkTimeout(req, res);
-  next();
-});
-
 app.use('/', routes);
-
-
+//app.use('/users', users);
+//app.use(partials());  //aqui estabe estp
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -65,8 +44,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err, 
-            errors: []
+            error: err
         });
     });
 }
@@ -77,8 +55,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}, 
-        errors: []
+        error: {}
     });
 });
 

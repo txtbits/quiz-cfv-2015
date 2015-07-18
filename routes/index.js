@@ -11,16 +11,8 @@ router.get('/', function(req, res) {
 router.get('/quizes/question', quizController.question);
 router.get('/quizes/answer', quizController.answer);
 
-/*
-Modifique el router (routers/index.js) para que atienda las peticiones "GET /author" 
-y sirva una nueva vista views/author.ejs con los datos de los autores o autor de la página, 
-mostrando el nombre de los autores, su fotografía y un pequeño video (opcional) de 30 seg.
-*/
-
-router.get('/autor', function(req, res) {
-  res.render('/autor', /views/author.ejs);
+router.get('/author', function(req, res) {
+  res.render('/author', /views/author.ejs);
 });
-
-//render('/autor', /views/author.ejs);
 
 module.exports = router;

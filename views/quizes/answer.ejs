@@ -6,7 +6,10 @@
 		<link rel='stylesheet' href='/stylesheets/style.css'/>
 	</head>
 	<body>
-		<p><%= respuesta %> </p>
-		<a href="/quizes/question">Inténtelo otra vez </a>
+		<h2>Quiz: Respuesta</h2>
+		<p>
+			<%= respuesta %> 
+			<a href="/quizes/<%= quiz.id %>">Volver</a>
+		</p>
 	</body>
 </html>
